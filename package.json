@@ -1,0 +1,17 @@
+{
+  "name": "@xieyezi/lyra-cn",
+  "version": "0.0.1",
+  "description": "a tool for offline search Chinese.",
+  "main": "index.js",
+  "scripts": {
+    "start": "esno index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@lyrasearch/lyra": "^0.2.8",
+    "esno": "^0.16.3",
+    "pinyin": "3.0.0-alpha.4"
+  }
+}
