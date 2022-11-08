@@ -1,14 +1,36 @@
 {
   "name": "@xieyezi/lyra-cn",
   "version": "0.0.1",
+  "packageManager": "pnpm@7.14.2",
   "description": "a tool for offline search Chinese.",
-  "main": "index.js",
   "scripts": {
     "start": "esno index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "xieyezi",
   "license": "ISC",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
   "dependencies": {
     "@lyrasearch/lyra": "^0.2.8",
     "esno": "^0.16.3",
@@ -16,5 +38,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "pnpm": "^7.14.2",
+    "typescript": "^4.8.4"
   }
 }

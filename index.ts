@@ -1,68 +1,74 @@
-import { create, insertBatch, search } from '@lyrasearch/lyra'
-import pinyin from 'pinyin'
+import * as lyra from "@lyrasearch/lyra";
+import type { PropertiesSchema } from "@lyrasearch/lyra";
+import { initDataToPin, keyWordToPin } from "./util";
+import type { InitDataItem, FormatInitDataItem } from "./util";
 
-const data = [
-  {
-    quote: 'It is during our darkest moments that we must focus to see the light.',
-    author: '版本控制系统规范',
-  },
-  {
-    quote: 'If you really look closely, most overnight successes took a long time.',
-    author: '版测试',
-  },
-  {
-    quote: 'If you are not willing to risk the usual, you will have to settle for the ordinary.',
-    author: '反对改革的是疯狂了',
-  },
-  {
-    quote: "You miss 100% of the shots you don't take",
-    author: '史蒂夫 dfgdgjk 的赶快 的版本 sdd 发过来',
-  },
-]
+const { create, insert, insertBatch, remove, search } = lyra;
 
-function initDB() {
-  const db = create({
-    schema: {
-      author: 'string',
-      authorCN:"string",
-      quote: 'string',
-    },
-  })
-  return db
-}
+/**
+ * schema type for init db
+ */
+export type SchemaType = PropertiesSchema & {
+  key: string;
+};
 
-async function insertData(db, data) {
-  await insertBatch(db, [...data])
-}
+/**
+ * init initDB
+ */
+export type InitDB = (schema: SchemaType) => Promise<unknown>;
 
-function searchResult(db, keyword) {
-  const result = search(db, {
-    term: keyword,
-    properties: '*',
-  })
+const init: InitDB = (schema: SchemaType) => {
+  return new Promise((resolve, reject) => {
+    const { key } = schema;
+    if (!key) reject(new Error("need param which is called 'key'."));
+    try {
+      const db = create({
+        schema: { ...schema }
+      });
+      if (db) resolve(db);
+    } catch (error) {
+      reject(`init db failed, reason: ${error}.`);
+    }
+  });
+};
 
-  return result
-}
+const add = (db: lyra.Lyra<any>, data: InitDataItem) => {
+  const { key } = data;
+  if (!key) {
+    console.error("need param which is called 'key'.");
+    return;
+  }
 
-function toPin(data) {
-  const formatData = [] as any
-  data.forEach(({ quote, author }) =>
-    formatData.push({
-      quote,
-      authorCN: author,
-      author: pinyin(author, {
-        style: 'normal',
-      }).join(' '),
-    })
-  )
+  return new Promise((resolve, reject) => {
+    const key_CN = keyWordToPin(key);
+    try {
+      insert(db, { key_CN, ...data });
+      resolve("success");
+    } catch (error) {
+      reject(`add new item failed, reason: ${error}.`);
+    }
+  });
+};
 
-  return formatData
-}
+// export { init, insert, insertBatch, remove };
 
-const db = initDB()
-const formatData = toPin(data)
+// async function insertData(db, data) {
+//   await insertBatch(db, [...data]);
+// }
 
-insertData(db, formatData).then(() => {
-  const result = searchResult(db, pinyin('版本', { style: 'normal' }).join(' '))
-  console.log('result:', result)
-})
+// function searchResult(db, keyword) {
+//   const result = search(db, {
+//     term: keyword,
+//     properties: "*"
+//   });
+
+//   return result;
+// }
+
+// const db = initDB();
+// const formatData = toPin(data);
+
+// insertData(db, formatData).then(() => {
+//   const result = searchResult(db, pinyin("版本", { style: "normal" }).join(" "));
+//   console.log("result:", result);
+// });
