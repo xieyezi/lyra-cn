@@ -5,11 +5,21 @@
   "description": "a tool for offline search Chinese.",
   "scripts": {
     "dev": "esno src/playgroud.ts",
-    "test": "vitest --root src/"
+    "test": "vitest --root src/",
+    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "release": "release-it"
   },
   "keywords": [],
-  "author": "xieyezi",
-  "license": "ISC",
+  "author": {
+    "name": "xieyezi",
+    "url": "https://github.com/xieyezi"
+  },
+  "repository": {
+    "url": "https://github.com/xieyezi/lyra-cn",
+    "type": "git"
+  },
+  "license": "MIT",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -34,11 +44,17 @@
   "sideEffects": false,
   "dependencies": {
     "@lyrasearch/lyra": "^0.2.8",
-    "esno": "^0.16.3",
     "pinyin": "3.0.0-alpha.4"
   },
   "devDependencies": {
+    "@release-it/conventional-changelog": "^5.1.1",
+    "@xieyezi/eslint-config-typescript": "^1.0.2",
+    "@xieyezi/prettier-config-preset": "^1.0.2",
+    "eslint": "^8.27.0",
+    "esno": "^0.16.3",
     "pnpm": "^7.14.2",
+    "prettier": "^2.7.1",
+    "release-it": "^15.5.0",
     "typescript": "^4.8.4",
     "vitest": "^0.25.0"
   },

@@ -1,1 +1,1 @@
-export { useLyra } from './lyraCN'
+export { useLyra } from "./lyra";
