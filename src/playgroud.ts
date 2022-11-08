@@ -34,8 +34,12 @@ const db = init({
   author: 'string',
 })
 
+console.log('init success.')
+
 insert(db)
+
+console.log('add success.')
 
 const res = search(db, '砍伐')
 
-console.log('res:', res)
+console.log('search success:\n', res)
