@@ -1,68 +1,96 @@
-import { create, insertBatch, search } from '@lyrasearch/lyra'
-import pinyin from 'pinyin'
+import * as lyra from '@lyrasearch/lyra'
+import type { PropertiesSchema } from '@lyrasearch/lyra'
+import { initDataToPin, keyWordToPin } from './util'
+import type { InitDataItem, FormatInitDataItem } from './util'
 
-const data = [
-  {
-    quote: 'It is during our darkest moments that we must focus to see the light.',
-    author: '版本控制系统规范',
-  },
-  {
-    quote: 'If you really look closely, most overnight successes took a long time.',
-    author: '版测试',
-  },
-  {
-    quote: 'If you are not willing to risk the usual, you will have to settle for the ordinary.',
-    author: '反对改革的是疯狂了',
-  },
-  {
-    quote: "You miss 100% of the shots you don't take",
-    author: '史蒂夫 dfgdgjk 的赶快 的版本 sdd 发过来',
-  },
-]
+const { create, insert, insertBatch, remove, search: searchResult } = lyra
 
-function initDB() {
-  const db = create({
-    schema: {
-      author: 'string',
-      authorCN:"string",
-      quote: 'string',
-    },
-  })
+/**
+ * schema type for init db
+ */
+export type SchemaType = PropertiesSchema & {
+  key: 'string'
+}
+
+/**
+ * init initDB
+ */
+export type InitDB = (schema: SchemaType) => lyra.Lyra<any>
+
+/**
+ * insert a new record into db.
+ */
+export type AddNewItem = (db: lyra.Lyra<any>, data: InitDataItem) => void
+
+/**
+ * insert new record into db by batch.
+ */
+export type AddByBatch = (db: lyra.Lyra<any>, data: Array<InitDataItem>) => Promise<void>
+
+/**
+ * search
+ */
+export type Search = (db: lyra.Lyra<any>, keyWord: string) => Array<InitDataItem>
+
+const init: InitDB = (schema: SchemaType) => {
+  let db
+  const { key } = schema
+  if (!key) {
+    console.error("need param which is called 'key'.")
+    return
+  }
+  db = create({
+    schema: { key_PIN: 'string', ...schema },
+    defaultLanguage: 'english',
+  }) as unknown as lyra.Lyra<any>
+
   return db
 }
 
-async function insertData(db, data) {
-  await insertBatch(db, [...data])
+const add: AddNewItem = (db: lyra.Lyra<any>, data: InitDataItem) => {
+  const { key } = data
+  if (!key) {
+    console.error("need param which is called 'key'.")
+    return
+  }
+  const key_PIN = keyWordToPin(key)
+  insert(db, { key_PIN, ...data })
 }
 
-function searchResult(db, keyword) {
-  const result = search(db, {
-    term: keyword,
-    properties: '*',
-  })
+const addByBatch: AddByBatch = async (db: lyra.Lyra<any>, data: Array<InitDataItem>) => {
+  const haveKey = data.every((e) => 'key' in e)
+  if (!haveKey) {
+    console.error("every item need param which is called 'key'.")
+    return
+  }
+  const formatData = initDataToPin(data)
+  await insertBatch(db, [...formatData])
+}
+
+const search: Search = (db: lyra.Lyra<any>, keyWord: string) => {
+  let result: Array<FormatInitDataItem> = []
+  const key_PIN = keyWordToPin(keyWord)
+
+  if (key_PIN) {
+    // @ts-ignore
+    const res = searchResult(db, { term: key_PIN, properties: '*' })
+    if (res && res.hits) {
+      res?.hits.forEach((e) => delete e.key_PIN)
+      result = [...res.hits] as unknown as Array<InitDataItem>
+    }
+  }
 
   return result
 }
 
-function toPin(data) {
-  const formatData = [] as any
-  data.forEach(({ quote, author }) =>
-    formatData.push({
-      quote,
-      authorCN: author,
-      author: pinyin(author, {
-        style: 'normal',
-      }).join(' '),
-    })
-  )
-
-  return formatData
+function useLyra() {
+  return {
+    init,
+    add,
+    addByBatch,
+    search,
+    remove,
+  }
 }
 
-const db = initDB()
-const formatData = toPin(data)
-
-insertData(db, formatData).then(() => {
-  const result = searchResult(db, pinyin('版本', { style: 'normal' }).join(' '))
-  console.log('result:', result)
-})
+export { useLyra }

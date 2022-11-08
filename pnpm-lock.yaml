@@ -4,11 +4,17 @@ specifiers:
   '@lyrasearch/lyra': ^0.2.8
   esno: ^0.16.3
   pinyin: 3.0.0-alpha.4
+  pnpm: ^7.14.2
+  typescript: ^4.8.4
 
 dependencies:
   '@lyrasearch/lyra': 0.2.8
   esno: 0.16.3
   pinyin: 3.0.0-alpha.4
+
+devDependencies:
+  pnpm: 7.14.2
+  typescript: 4.8.4
 
 packages:
 
@@ -165,6 +171,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -174,6 +181,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -183,6 +191,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
     requiresBuild: true
     dev: false
     optional: true
@@ -192,6 +201,7 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
     requiresBuild: true
     dev: false
     optional: true
@@ -968,6 +978,12 @@ packages:
       - supports-color
     dev: false
 
+  /pnpm/7.14.2:
+    resolution: {integrity: sha512-NSxrIaRW07jFQQ1fPFFOA8eMfuogsMeygOKd3zaFgyJBdo1oh61jl2JjWc+w0XNzWIMG7/v9HK7nP8RTL5NO3g==}
+    engines: {node: '>=14.6'}
+    hasBin: true
+    dev: true
+
   /preval.macro/4.0.0:
     resolution: {integrity: sha512-sJJnE71X+MPr64CVD2AurmUj4JEDqbudYbStav3L9Xjcqm4AR0ymMm6sugw1mUmfI/7gw4JWA4JXo/k6w34crw==}
     dependencies:
@@ -1137,6 +1153,12 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: false
+
+  /typescript/4.8.4:
+    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
