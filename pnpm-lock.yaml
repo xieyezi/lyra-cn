@@ -28,7 +28,7 @@ devDependencies:
   prettier: 2.7.1
   release-it: 15.5.0
   typescript: 4.8.4
-  vitest: 0.25.0
+  vitest: 0.25.1
 
 packages:
 
@@ -351,11 +351,11 @@ packages:
       - encoding
     dev: true
 
-  /@octokit/endpoint/7.0.3:
-    resolution: {integrity: sha512-57gRlb28bwTsdNXq+O3JTQ7ERmBTuik9+LelgcLIVfYwf235VHbN9QNo4kXExtp/h8T423cR5iJThKtFYxC7Lw==}
+  /@octokit/endpoint/7.0.2:
+    resolution: {integrity: sha512-8/AUACfE9vpRpehE6ZLfEtzkibe5nfsSwFZVMsG8qabqRt1M81qZYUFRZa1B8w8lP6cdfDJfRq9HWS+MbmR7tw==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/types': 8.0.0
+      '@octokit/types': 7.5.1
       is-plain-object: 5.0.0
       universal-user-agent: 6.0.0
     dev: true
@@ -421,7 +421,7 @@ packages:
     resolution: {integrity: sha512-6VDqgj0HMc2FUX2awIs+sM6OwLgwHvAi4KCK3mT2H2IKRt6oH9d0fej5LluF5mck1lRR/rFWN0YIDSYXYSylbw==}
     engines: {node: '>= 14'}
     dependencies:
-      '@octokit/endpoint': 7.0.3
+      '@octokit/endpoint': 7.0.2
       '@octokit/request-error': 3.0.2
       '@octokit/types': 8.0.0
       is-plain-object: 5.0.0
@@ -3603,8 +3603,6 @@ packages:
     hasBin: true
     dev: true
 
-<<<<<<< HEAD
-=======
   /postcss/8.4.18:
     resolution: {integrity: sha512-Wi8mWhncLJm11GATDaQKobXSNEYGUHeQLiQqDFG1qQ5UTDPTEvKw0Xt5NsTpktGTwLps3ByrWsBrG0rB8YQ9oA==}
     engines: {node: ^10 || ^12 || >=14}
@@ -3630,7 +3628,6 @@ packages:
     hasBin: true
     dev: true
 
->>>>>>> ce7f467f0c5e31215035a6ea3ca5b2677852bac1
   /preval.macro/4.0.0:
     resolution: {integrity: sha512-sJJnE71X+MPr64CVD2AurmUj4JEDqbudYbStav3L9Xjcqm4AR0ymMm6sugw1mUmfI/7gw4JWA4JXo/k6w34crw==}
     dependencies:
@@ -4515,12 +4512,6 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dev: true
 
-  /typescript/4.8.4:
-    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
-
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -4565,8 +4556,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.25.0:
-    resolution: {integrity: sha512-CVgBdKSeA27mowKC/C31Tx7ZBjRoyasq/yW7zoqUaCdKaOsjdzRUH5KgSL3eG36DzaaUsbnwWPUbAOtFz5k6tQ==}
+  /vitest/0.25.1:
+    resolution: {integrity: sha512-eH74h6MkuEgsqR4mAQZeMK9O0PROiKY+i+1GMz/fBi5A3L2ml5U7JQs7LfPU7+uWUziZyLHagl+rkyfR8SLhlA==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
