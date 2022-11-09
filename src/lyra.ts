@@ -15,7 +15,7 @@ export type SchemaType = PropertiesSchema & {
 /**
  * init initDB
  */
-export type InitDB = (schema: SchemaType) => lyra.Lyra<any>;
+export type InitDB = <S extends SchemaType>(schema: SchemaType) => lyra.Lyra<S>;
 
 /**
  * insert a new record into db.
@@ -41,7 +41,7 @@ const init: InitDB = (schema: SchemaType) => {
   const db = create({
     schema: { key_PIN: "string", ...schema },
     defaultLanguage: "english"
-  }) ;
+  });
 
   return db as any;
 };
